@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список файлов</title>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <th>№</th>
+            <th>Имя файла</th>
+            <th>Владалец</th>
+            <th>Скачан</th>
+        </tr>
+        <tr th:each="file: ${files}">
+            <td th:text="${file.id}">id</td>
+            <td th:text="${file.fileName}">name</td>
+            <td th:text="${file.usr.userName}">owner</td>
+            <td th:text="${file.downloadCount}">id</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

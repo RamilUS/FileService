@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+                     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div>
+    <a th:href="@{/userlist}"> Пользователи </a>
+</div>
+<div th:if="${roleName=='analyst'}">
+    <a th:href="@{/statistic}"> Статистика </a>
+</div>
+<div>
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+        <input type="text" name="description" placeholder="Описание файла">
+        <input type="file" name="file">
+        <input type="submit" value="Загрузить">
+    </form>
+    <p th:text="${report}">Text</p>
+</div>
+<div th:if="${userName == pageOwner} OR ${roleName == 'admin'}">
+    <table>
+        <tr th:each = "file: ${files}">
+            <td th:text="${file.fileName}">fileName</td>
+            <td><a th:href="@{/download/} + ${file.fileName}">Скачать</a></td>
+        </tr>
+    </table>
+</div>
+<div th:unless="${userName == pageOwner} OR ${roleName == 'admin'}">
+    Доступ запрещен
+</div>
+
+</body>
+</html>

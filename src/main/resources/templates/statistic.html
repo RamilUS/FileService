@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Статистика</title>
+</head>
+<body>
+<div>
+    Колличество пользователей
+    <p th:text="${userCount}">колличество</p>
+    <a th:href="@{/userlist}">Список пользователей</a>
+</div>
+<div>
+    Колличество файлов в системе
+    <p th:text="${fileCount}">колличество</p>
+    <a th:href="@{/filelist}">Список файлов</a>
+</div>
+</body>
+</html>

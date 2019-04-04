@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+<div th:if="${roleName == 'user'}">
+    <table>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Ссылка</th>
+        </tr>
+        <tr th:each = "usr: ${users}">
+            <td th:text="${usr.userName}">userName</td>
+            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
+        </tr>
+    </table>
+</div>
+<div th:if="${roleName == 'analyst'}">
+    <table>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Колличество файлов</th>
+            <th>Ссылка</th>
+        </tr>
+        <tr th:each="usr: ${users}">
+            <td th:text="${usr.userName}"></td>
+            <td th:text="${usr.filesCount}"></td>
+            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
+        </tr>
+    </table>
+</div>
+<div th:if="${roleName == 'admin'}">
+    <table>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Колличество файлов</th>
+            <th>Ссылка</th>
+            <th></th>
+        </tr>
+        <tr th:each="usr: ${users}">
+            <td th:text="${usr.userName}"></td>
+            <td th:text="${usr.filesCount}"></td>
+            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
+            <td><a th:href="@{/edit/} + ${usr.userName}">Редактировать</a> </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
