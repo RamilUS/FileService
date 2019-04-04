@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-                     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>User page</title>
@@ -10,6 +10,16 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
+<table>
+    <tr>
+        <th>Page owner is</th>
+    </tr>
+    <tr>
+        <td th:text="${pageOwner}"></td>
+    </tr>
+</table>
+
+
 <div>
     <a th:href="@{/userlist}"> Пользователи </a>
 </div>
@@ -24,17 +34,45 @@
     </form>
     <p th:text="${report}">Text</p>
 </div>
-<div th:if="${userName == pageOwner} OR ${roleName == 'admin'}">
+<h2>Файлы собственника страницы:</h2>
+<div th:if="${userName == pageOwner} OR ${roleName == 'admin'}OR${roleName=='analyst'}">
     <table>
-        <tr th:each = "file: ${files}">
+        <tr th:each="file: ${files}">
             <td th:text="${file.fileName}">fileName</td>
             <td><a th:href="@{/download/} + ${file.fileName}">Скачать</a></td>
+            <td><a th:href="@{/remove/} + ${file.fileName}">Удалить</a></td>
         </tr>
     </table>
 </div>
-<div th:unless="${userName == pageOwner} OR ${roleName == 'admin'}">
+<div th:unless="${userName == pageOwner} OR ${roleName == 'admin'}OR${roleName=='analyst'}">
     Доступ запрещен
+    <div><a th:href="@{/requestvisible/}+${pageOwnerId} ">Запрос на просмотр файлов</a></div>
+    <div><a th:href="@{/requestdownload/}+${pageOwnerId} ">запрос на скачивание файлов</a></div>
 </div>
+
+<div th:if="${userName == pageOwner}">
+    <table>
+        <tr>
+            <th>Запросы на просмотр файлов от пользователей :</th>
+        </tr>
+        <tr th:each="usr: ${requestUsers}">
+          <td th:text="${usr.userName}">userName</td>
+            <td><a th:href="@{/confirmvisible/} + ${pageOwnerId}">Дать доступ</a></td>
+            <td><a th:href="@{/denyvisible/} + ${pageOwnerId}">Отказать</a></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>Запросы на скачивание файлов от пользователей :</th>
+        </tr>
+        <tr th:each="usr: ${requestUsers}">
+             <td th:text="${usr.userName}">userName</td>
+            <td><a th:href="@{/confirmvisible/} + ${pageOwnerId}">Дать доступ</a></td>
+            <td><a th:href="@{/denydownload/} + ${pageOwnerId}">Отказать</a></td>
+        </tr>
+    </table>
+</div>
+
 
 </body>
 </html>

@@ -27,10 +27,10 @@ public class GeneralControllerImpl  {
     }
 
     /**
-     * Переход на главную страницу сервиса
+     * Переход на главную страницу сервиса действующиго пользователя
      * @param user действующий пользователь
      * @param model модель
-     * @return предстовление остновной страницы сервиса
+     * @return предстовление основной страницы сервиса
      */
 
     @GetMapping("/userpage")
@@ -51,9 +51,10 @@ public class GeneralControllerImpl  {
     public String userPage(@AuthenticationPrincipal UsrPrincipal usrPrincipal,
                            @PathVariable("pageOwner") String pageOwner, Model model) {
 
-        model.addAttribute("files", fileService.getUserFileList(usrPrincipal.getUsername()));
+        model.addAttribute("files", fileService.getUserFileList(pageOwner));
         model.addAttribute("roleName", usrPrincipal.getUsr().getRole().getRoleName());
         model.addAttribute("pageOwner", pageOwner);
+        model.addAttribute("pageOwnerId", userService.getOwnerId(userService.getOwnerByName(pageOwner)));
         model.addAttribute("userName", usrPrincipal.getUsr().getUserName());
         return "userpage";
     }
@@ -78,6 +79,7 @@ public class GeneralControllerImpl  {
         model.addAttribute("roleName", usrPrincipal.getUsr().getRole().getRoleName());
         model.addAttribute("users", userService.userList());
         model.addAttribute("userName", usrPrincipal.getUsr().getUserName());
+        model.addAttribute("requestUsers",usrPrincipal.getUsr().getRequestersToVisible());
 
         return "userlist";
     }

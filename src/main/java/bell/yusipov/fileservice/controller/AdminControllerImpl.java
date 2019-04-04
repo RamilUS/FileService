@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @PreAuthorize("hasAnyAuthority('admin', 'analyst')")
-public class AdminControllerImpl /*implements Admin Controller */{
+public class AdminControllerImpl {
 
     private final UserService userService;
     private final FileService fileService;

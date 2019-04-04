@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.encoder = encoder;
-        this.emailService=emailService;
+        this.emailService = emailService;
 
     }
 
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
             saveRoleUser();
         }
 
-        String validationCode= UUID.randomUUID().toString();
+        String validationCode = UUID.randomUUID().toString();
 
 
-        SendThread sendThread= new SendThread(emailService,validationCode, usr.getEmail());
+        SendThread sendThread = new SendThread(emailService, validationCode, usr.getEmail());
         sendThread.start();
 
 
@@ -81,13 +81,36 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public  void validateUser (String activationCode){
-        Usr usr=userDao.getUserByActivationCode(activationCode);
-                usr.setIsActive(true);
+    public void validateUser(String activationCode) {
+
+        Usr usr = userDao.getUserByActivationCode(activationCode);
+        usr.setIsActive(true);
         userDao.updateUser(usr);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Usr getOwnerByName(String owner) {
+
+        return userDao.getUserByName(owner);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getOwnerId(Usr usr) {
+
+        return userDao.getUserId(usr);
+    }
+
+    /**
+     * Установка у нового пользователя роль user
+     */
     private void saveRoleUser() {
+
         roleName = roleDao.getRole("user");
     }
 

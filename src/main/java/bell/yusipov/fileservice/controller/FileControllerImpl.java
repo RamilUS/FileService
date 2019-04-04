@@ -27,9 +27,9 @@ public class FileControllerImpl {
     private final FileService fileService;
 
     @Autowired
-    public  FileControllerImpl(FileService fileService){
+    public FileControllerImpl(FileService fileService) {
 
-        this.fileService=fileService;
+        this.fileService = fileService;
 
     }
 
@@ -47,21 +47,22 @@ public class FileControllerImpl {
                              @RequestParam("description") String description,
                              @AuthenticationPrincipal UsrPrincipal user) {
 
-        if( description==null || description.isEmpty()){
-            model.addAttribute("report","Нет описания файла");
+        if (description == null || description.isEmpty()) {
+            model.addAttribute("report", "Нет описания файла");
             return "userpage";
         }
 
-        if (uploadFile==null){
-            model.addAttribute("report","Файл не выбран");
+        if (uploadFile == null) {
+            model.addAttribute("report", "Файл не выбран");
         }
 
-        fileService.upload(uploadFile,description,user.getUsr());
-        model.addAttribute("report","Файл загружен");
-        model.addAttribute("files",fileService.getFileList());
+        fileService.upload(uploadFile, description, user.getUsr());
+        model.addAttribute("report", "Файл загружен");
+        model.addAttribute("files", fileService.getFileList());
 
         return "userpage";
     }
+
     /**
      * Скачивание файла из БД
      *
@@ -71,12 +72,11 @@ public class FileControllerImpl {
     @GetMapping("/download/{fileName}")
     public ResponseEntity<ByteArrayResource> download(@PathVariable("fileName") String fileName) {
 
-        if(fileName==null || fileName.isEmpty()){
+        if (fileName == null || fileName.isEmpty()) {
             throw new RuntimeException("DOWNLOAD ERROR - fine name empty or null");
         }
 
         File file = fileService.getByFileName(fileName);
-
 
 
         byte[] data = file.getFileData();
@@ -84,9 +84,29 @@ public class FileControllerImpl {
         fileService.upgradeFileCount(file);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=" + file.getFileName())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getFileName())
                 .contentType(MediaType.TEXT_PLAIN)
                 .contentLength(data.length)
                 .body(resource);
+    }
+
+    /**
+     * Удаление файла из БД
+     *
+     * @param fileName название файла
+     * @return скачивание файла
+     */
+    @GetMapping("/remove/{fileName}")
+    public String remove(@PathVariable("fileName") String fileName) {
+
+        if (fileName == null || fileName.isEmpty()) {
+            throw new RuntimeException("DOWNLOAD ERROR - fine name empty or null");
+        }
+
+        File file = fileService.getByFileName(fileName);
+        fileService.remove(file);
+
+        return "redirect:/userpage";
+
     }
 }

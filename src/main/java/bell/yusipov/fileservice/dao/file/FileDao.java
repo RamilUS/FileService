@@ -45,4 +45,10 @@ public interface FileDao {
      */
     void upgradeFile(File file);
 
+    /**
+     * Удаление файла
+     * @param file файл
+     */
+    void delete (File file);
+
 }

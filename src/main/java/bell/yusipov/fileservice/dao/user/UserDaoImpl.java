@@ -73,6 +73,26 @@ public class UserDaoImpl implements UserDao {
         return typedQuery.getSingleResult();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Usr getUserById(Integer userId){
+        if (userId == null) {
+            throw new RuntimeException("User dao error: user ID cannot be null");
+        }
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usr> criteriaQuery = criteriaBuilder.createQuery(Usr.class);
+        Root<Usr> root = criteriaQuery.from(Usr.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("id"), userId));
+
+        TypedQuery<Usr> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        return typedQuery.getSingleResult();
+    }
+
 
     /**
      * {@inheritDoc}
@@ -106,6 +126,15 @@ public class UserDaoImpl implements UserDao {
             return;
         }
         entityManager.merge(usr);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getUserId(Usr usr){
+
+        return usr.getId();
     }
 
 }

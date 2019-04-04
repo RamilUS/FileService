@@ -97,13 +97,27 @@ public class FileServiceImpl implements FileService {
     @Transactional
     public void upgradeFileCount(File file) {
         if (file == null) {
-            throw new RuntimeException("File name cannot be null or empty");
+            throw new RuntimeException("File name cannot be null ");
         }
         Integer downloadCount = file.getDownloadCount();
         downloadCount++;
         file.setDownloadCount(downloadCount);
 
         fileDao.upgradeFile(file);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void remove(File file){
+        if (file == null) {
+            throw new RuntimeException("File name cannot be null ");
+        }
+
+        fileDao.delete(file);
 
     }
 }

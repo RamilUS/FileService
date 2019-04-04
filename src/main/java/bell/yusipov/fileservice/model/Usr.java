@@ -2,7 +2,9 @@ package bell.yusipov.fileservice.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Пользователь
@@ -64,6 +66,39 @@ public class Usr implements Serializable {
 
     @OneToMany(mappedBy = "usr", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<File> files;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "request_to_visible_access",
+            joinColumns = { @JoinColumn(name = "owner_id") },
+            inverseJoinColumns = { @JoinColumn(name = "requester_id") }
+    )
+    private Set<Usr> requestersToVisible = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "visible_access",
+            joinColumns = { @JoinColumn(name = "owner_id") },
+            inverseJoinColumns = { @JoinColumn(name = "requester_id") }
+    )
+    private Set<Usr> visibleAccess = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "request_to_download_access",
+            joinColumns = { @JoinColumn(name = "owner_id") },
+            inverseJoinColumns = { @JoinColumn(name = "requester_id") }
+    )
+    private Set<Usr> requestersToDownload = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "download_access",
+            joinColumns = { @JoinColumn(name = "owner_id") },
+            inverseJoinColumns = { @JoinColumn(name = "requester_id") }
+    )
+    private Set<Usr> downloadAccess = new HashSet<>();
+
 
     public Usr() {
 
@@ -143,5 +178,37 @@ public class Usr implements Serializable {
 
     public Integer getFilesCount(){
         return getFiles().size();
+    }
+
+    public Set<Usr> getRequestersToVisible() {
+        return requestersToVisible;
+    }
+
+    public void setRequestersToVisible(Set<Usr> requestersToVisible) {
+        this.requestersToVisible = requestersToVisible;
+    }
+
+    public Set<Usr> getVisibleAccess() {
+        return visibleAccess;
+    }
+
+    public void setVisibleAccess(Set<Usr> visibleAccess) {
+        this.visibleAccess = visibleAccess;
+    }
+
+    public Set<Usr> getRequestersToDownload() {
+        return requestersToDownload;
+    }
+
+    public void setRequestersToDownload(Set<Usr> requestersToDownload) {
+        this.requestersToDownload = requestersToDownload;
+    }
+
+    public Set<Usr> getDownloadAccess() {
+        return downloadAccess;
+    }
+
+    public void setDownloadAccess(Set<Usr> downloadAccess) {
+        this.downloadAccess = downloadAccess;
     }
 }

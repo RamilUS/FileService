@@ -49,4 +49,10 @@ public interface FileService {
      * @param file файл
      */
     void upgradeFileCount(File file);
+
+    /**
+     * Удаление файла из БД
+     * @param file
+     */
+    void remove(File file);
 }

@@ -31,6 +31,14 @@ public interface UserDao {
     Usr getUserByName(String usrName);
 
     /**
+     * Получение пользователя по его индификатору
+     *
+     * @param userId индификатору
+     * @return объект пользователя
+     */
+    Usr getUserById(Integer userId);
+
+    /**
      * Получение пользователя по коду активации
      *
      * @param activCode - активационный код
@@ -44,4 +52,11 @@ public interface UserDao {
      * @param usr пользователь
      */
     void updateUser(Usr usr);
+
+    /**
+     * Получение ниндификатора пользователя
+     * @param usr пользователь
+     * @return индификатор
+     */
+    Integer getUserId(Usr usr);
 }

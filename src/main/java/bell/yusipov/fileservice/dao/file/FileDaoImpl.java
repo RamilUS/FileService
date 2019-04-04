@@ -104,4 +104,13 @@ public class FileDaoImpl implements FileDao {
         entityManager.merge(file);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(File file) {
+
+        entityManager.remove(file);
+    }
 }
