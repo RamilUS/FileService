@@ -1,7 +1,7 @@
 package bell.yusipov.fileservice.controller;
 
 
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import bell.yusipov.fileservice.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,36 +14,36 @@ import org.springframework.web.bind.annotation.PostMapping;
  * Контроллер регистрации
  */
 @Controller
-public class RegistrationControllerImpl {
+public class RegistrationController {
 
     private final UserService userService;
 
     @Autowired
-    RegistrationControllerImpl(UserService userService) {
+    RegistrationController(UserService userService) {
         this.userService = userService;
     }
 
     /**
      * Переход на страницу регистрации
-     * @param usr пустой объект пользователя
+     * @param user пустой объект пользователя
      * @return имя представления регистрации
      */
     @GetMapping("/registration")
-    public String registration(Usr usr) {
+    public String registration(User user) {
 
         return "registration";
     }
 
     /**
      * Добавление нового пользователя
-     * @param usr данные пользователя
+     * @param user данные пользователя
      * @param result объект перехвата ошибок
      * @return перенаправляет на страницу логина или обновляет страницу регистрации в случае ошибки
      */
     @PostMapping("/registration")
-    public String addUser(Usr usr, BindingResult result) {
+    public String addUser(User user, BindingResult result) {
 
-        if (usr == null) {
+        if (user == null) {
             return "login";
         }
 
@@ -51,7 +51,7 @@ public class RegistrationControllerImpl {
             return "registration";
         }
 
-        userService.addUser(usr);
+        userService.addUser(user);
 
         return "redirect:/login";
     }

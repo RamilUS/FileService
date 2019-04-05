@@ -3,7 +3,7 @@ package bell.yusipov.fileservice.service.user;
 import bell.yusipov.fileservice.dao.role.RoleDao;
 import bell.yusipov.fileservice.dao.user.UserDao;
 import bell.yusipov.fileservice.model.Role;
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import bell.yusipov.fileservice.service.email.EmailService;
 import bell.yusipov.fileservice.service.email.SendThread;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public void addUser(Usr usr) {
-        if (usr == null) {
+    public void addUser(User user) {
+        if (user == null) {
             throw new RuntimeException("UserService ERROR: user cannot be null");
         }
 
@@ -53,16 +53,16 @@ public class UserServiceImpl implements UserService {
         String validationCode = UUID.randomUUID().toString();
 
 
-        SendThread sendThread = new SendThread(emailService, validationCode, usr.getEmail());
+        SendThread sendThread = new SendThread(emailService, validationCode, user.getEmail());
         sendThread.start();
 
 
-        usr.setActivationCode(validationCode);
-        usr.setIsActive(false);
-        usr.setRole(roleName);
-        usr.setPassword(encoder.encode(usr.getPassword()));
+        user.setActivationCode(validationCode);
+        user.setIsActive(false);
+        user.setRole(roleName);
+        user.setPassword(encoder.encode(user.getPassword()));
 
-        userDao.addUser(usr);
+        userDao.addUser(user);
 
     }
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public List<Usr> userList() {
+    public List<User> userList() {
 
         return userDao.findAll();
 
@@ -83,16 +83,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void validateUser(String activationCode) {
 
-        Usr usr = userDao.getUserByActivationCode(activationCode);
-        usr.setIsActive(true);
-        userDao.updateUser(usr);
+        User user = userDao.getUserByActivationCode(activationCode);
+        user.setIsActive(true);
+        userDao.updateUser(user);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Usr getOwnerByName(String owner) {
+    public User getOwnerByName(String owner) {
 
         return userDao.getUserByName(owner);
     }
@@ -101,9 +101,9 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public Integer getOwnerId(Usr usr) {
+    public Integer getOwnerId(User user) {
 
-        return userDao.getUserId(usr);
+        return userDao.getUserId(user);
     }
 
     /**

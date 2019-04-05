@@ -18,24 +18,30 @@ public class File implements Serializable{
     private Integer id;
 
     /**
+     * Служебное поле Hibernate
+     */
+    @Version
+    private Integer version;
+
+    /**
      * Имя файла
      */
-    @Column(name = "file_name")
+    @Column(name = "file_name",nullable = false)
     private String fileName;
 
     /**
      * Данные файла
      */
-    @Column(name = "file_data")
+    @Column(name = "file_data",nullable = false)
     private byte[] fileData;
 
     /**
      * Описание
      */
-    @Column(name = "description")
+    @Column(name = "description",nullable = false)
     private String descriprion;
 
-    @Column(name = "download_count")
+    @Column(name = "download_count",nullable = false)
     private Integer downloadCount;
 
     /**
@@ -43,7 +49,7 @@ public class File implements Serializable{
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Usr usr;
+    private User user;
 
     public File(){
 
@@ -55,6 +61,14 @@ public class File implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     public String getFileName() {
@@ -89,11 +103,11 @@ public class File implements Serializable{
         this.downloadCount = downloadCount;
     }
 
-    public Usr getUsr() {
-        return usr;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsr(Usr usr) {
-        this.usr = usr;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

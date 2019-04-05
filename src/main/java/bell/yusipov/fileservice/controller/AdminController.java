@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @PreAuthorize("hasAnyAuthority('admin', 'analyst')")
-public class AdminControllerImpl {
+public class AdminController {
 
     private final UserService userService;
     private final FileService fileService;
 
     @Autowired
-    AdminControllerImpl(UserService userService, FileService fileService) {
+    AdminController(UserService userService, FileService fileService) {
         this.userService = userService;
         this.fileService = fileService;
     }

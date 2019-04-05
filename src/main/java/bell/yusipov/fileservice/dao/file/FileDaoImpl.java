@@ -1,7 +1,7 @@
 package bell.yusipov.fileservice.dao.file;
 
 import bell.yusipov.fileservice.model.File;
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,9 +78,9 @@ public class FileDaoImpl implements FileDao {
      * {@inheritDoc}
      */
     @Override
-    public List<File> findUserFiles(Usr usr) {
+    public List<File> findUserFiles(User user) {
 
-        if (usr == null) {
+        if (user == null) {
             return Collections.emptyList();
 
         }
@@ -89,7 +89,7 @@ public class FileDaoImpl implements FileDao {
         CriteriaQuery<File> criteriaQuery = criteriaBuilder.createQuery(File.class);
         Root<File> root = criteriaQuery.from(File.class);
 
-        criteriaQuery.where(criteriaBuilder.equal(root.get("usr"), usr));
+        criteriaQuery.where(criteriaBuilder.equal(root.get("user"), user));
         TypedQuery<File> query = entityManager.createQuery(criteriaQuery);
 
         return query.getResultList();

@@ -3,7 +3,7 @@ package bell.yusipov.fileservice.service.file;
 import bell.yusipov.fileservice.dao.file.FileDao;
 import bell.yusipov.fileservice.dao.user.UserDao;
 import bell.yusipov.fileservice.model.File;
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,18 +32,18 @@ public class FileServiceImpl implements FileService {
      */
     @Override
     @Transactional
-    public void upload(MultipartFile uploadFile, String description, Usr fileOwner) {
+    public void upload(MultipartFile uploadFile, String description, User fileOwner) {
 
         if (uploadFile == null || description == null || description.isEmpty() || fileOwner == null) {
             return;
         }
 
-        Usr usr = userDao.getUserByName(fileOwner.getUserName());
+        User user = userDao.getUserByName(fileOwner.getUserName());
 
         File file = new File();
         file.setDescriprion(description);
         file.setFileName(uploadFile.getOriginalFilename());
-        file.setUsr(usr);
+        file.setUser(user);
         file.setDownloadCount(0);
 
         try {
@@ -86,8 +86,8 @@ public class FileServiceImpl implements FileService {
             throw new RuntimeException("User name cannot be null or empty");
         }
 
-        Usr usr = userDao.getUserByName(userName);
-        return fileDao.findUserFiles(usr);
+        User user = userDao.getUserByName(userName);
+        return fileDao.findUserFiles(user);
     }
 
     /**

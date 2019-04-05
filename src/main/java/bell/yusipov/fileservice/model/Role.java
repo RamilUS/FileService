@@ -9,7 +9,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "role")
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     /**
      * Идетнификатор
@@ -19,18 +19,24 @@ public class Role implements Serializable{
     private Integer id;
 
     /**
+     * Служебное поле Hibernate
+     */
+    @Version
+    private Integer version;
+
+    /**
      * Название роли
      */
-    @Column(name = "role_name", length = 20)
+    @Column(name = "role_name", length = 20, nullable = false)
     private String roleName;
 
     /**
      * Пользователи с данной ролью
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    private List<Usr> users;
+    private List<User> users;
 
-    public Role(){
+    public Role() {
 
     }
 
@@ -42,6 +48,14 @@ public class Role implements Serializable{
         this.id = id;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public String getRoleName() {
         return roleName;
     }
@@ -50,11 +64,11 @@ public class Role implements Serializable{
         this.roleName = roleName;
     }
 
-    public List<Usr> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Usr> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

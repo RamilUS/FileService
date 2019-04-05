@@ -11,9 +11,9 @@
             <th>Имя пользователя</th>
             <th>Ссылка</th>
         </tr>
-        <tr th:each = "usr: ${users}">
-            <td th:text="${usr.userName}">userName</td>
-            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
+        <tr th:each = "user: ${users}">
+            <td th:text="${user.userName}">userName</td>
+            <td><a th:href="@{/userpage/} + ${user.userName}">Просмотр</a> </td>
         </tr>
     </table>
 </div>
@@ -24,10 +24,10 @@
             <th>Колличество файлов</th>
             <th>Ссылка</th>
         </tr>
-        <tr th:each="usr: ${users}">
-            <td th:text="${usr.userName}"></td>
-            <td th:text="${usr.filesCount}"></td>
-            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.filesCount}"></td>
+            <td><a th:href="@{/userpage/} + ${user.userName}">Просмотр</a> </td>
         </tr>
     </table>
 </div>
@@ -39,11 +39,11 @@
             <th>Ссылка</th>
             <th></th>
         </tr>
-        <tr th:each="usr: ${users}">
-            <td th:text="${usr.userName}"></td>
-            <td th:text="${usr.filesCount}"></td>
-            <td><a th:href="@{/userpage/} + ${usr.userName}">Просмотр</a> </td>
-            <td><a th:href="@{/edit/} + ${usr.userName}">Редактировать</a> </td>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.filesCount}"></td>
+            <td><a th:href="@{/userpage/} + ${user.userName}">Просмотр</a> </td>
+            <td><a th:href="@{/edit/} + ${user.userName}">Редактировать</a> </td>
         </tr>
     </table>
 </div>

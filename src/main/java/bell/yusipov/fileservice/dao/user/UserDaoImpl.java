@@ -1,6 +1,6 @@
 package bell.yusipov.fileservice.dao.user;
 
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,26 +28,26 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public void addUser(Usr usr) {
-        if (usr == null) {
+    public void addUser(User user) {
+        if (user == null) {
             return;
         }
 
-        entityManager.persist(usr);
+        entityManager.persist(user);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Usr> findAll() {
+    public List<User> findAll() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Usr> criteriaQuery = criteriaBuilder.createQuery(Usr.class);
-        Root<Usr> root = criteriaQuery.from(Usr.class);
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
 
         criteriaQuery.select(root);
 
-        TypedQuery<Usr> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 
         return typedQuery.getResultList();
     }
@@ -57,18 +57,18 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public Usr getUserByName(String userName) {
+    public User getUserByName(String userName) {
         if (userName == null || userName.isEmpty()) {
             throw new RuntimeException("User dao error: user name cannot be null or empty");
         }
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Usr> criteriaQuery = criteriaBuilder.createQuery(Usr.class);
-        Root<Usr> root = criteriaQuery.from(Usr.class);
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("userName"), userName));
 
-        TypedQuery<Usr> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 
         return typedQuery.getSingleResult();
     }
@@ -77,18 +77,18 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public Usr getUserById(Integer userId){
+    public User getUserById(Integer userId){
         if (userId == null) {
             throw new RuntimeException("User dao error: user ID cannot be null");
         }
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Usr> criteriaQuery = criteriaBuilder.createQuery(Usr.class);
-        Root<Usr> root = criteriaQuery.from(Usr.class);
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("id"), userId));
 
-        TypedQuery<Usr> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 
         return typedQuery.getSingleResult();
     }
@@ -98,19 +98,19 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public Usr getUserByActivationCode(String activationCode) {
+    public User getUserByActivationCode(String activationCode) {
 
         if (activationCode == null || activationCode.isEmpty()) {
             throw new RuntimeException("Activation code cannot be null or empty");
         }
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Usr> criteriaQuery = criteriaBuilder.createQuery(Usr.class);
-        Root<Usr> root = criteriaQuery.from(Usr.class);
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
 
         criteriaQuery.where(criteriaBuilder.equal(root.get("activationCode"), activationCode));
 
-        TypedQuery<Usr> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<User> typedQuery = entityManager.createQuery(criteriaQuery);
 
         return typedQuery.getSingleResult();
 
@@ -120,21 +120,21 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public void updateUser(Usr usr) {
+    public void updateUser(User user) {
 
-        if (usr == null) {
+        if (user == null) {
             return;
         }
-        entityManager.merge(usr);
+        entityManager.merge(user);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Integer getUserId(Usr usr){
+    public Integer getUserId(User user){
 
-        return usr.getId();
+        return user.getId();
     }
 
 }

@@ -21,18 +21,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UsrAuth usrAuth;
+    private final UserAuth userAuth;
 
     @Autowired
-    public WebSecurityConfig(UsrAuth usrAuth) {
-        this.usrAuth = usrAuth;
+    public WebSecurityConfig(UserAuth userAuth) {
+        this.userAuth = userAuth;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                   .authorizeRequests()
-                  .antMatchers("/", "/home", "/userlist","/registration","/registration/*").permitAll()
+                  .mvcMatchers("/", "/home", "/userlist","/registration","/registration/*").permitAll()
                   .anyRequest().authenticated()
                 .and()
                   .formLogin()
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usrAuth)
+        auth.userDetailsService(userAuth)
                 .passwordEncoder(encoder());
     }
 

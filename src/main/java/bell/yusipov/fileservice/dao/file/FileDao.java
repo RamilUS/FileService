@@ -1,7 +1,7 @@
 package bell.yusipov.fileservice.dao.file;
 
 import bell.yusipov.fileservice.model.File;
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 
 import java.util.List;
 
@@ -34,10 +34,10 @@ public interface FileDao {
     /**
      * Получения списка файлов пользователя
      *
-     * @param usr - пользователь
+     * @param user - пользователь
      * @return список файлов пользователя
      */
-    List<File> findUserFiles(Usr usr);
+    List<File> findUserFiles(User user);
 
     /**
      * Обновление данных о файле

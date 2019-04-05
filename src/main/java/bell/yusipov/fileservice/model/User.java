@@ -10,8 +10,8 @@ import java.util.Set;
  * Пользователь
  */
 @Entity
-@Table(name = "users")
-public class Usr implements Serializable {
+@Table(name = "user")
+public class User implements Serializable {
 
     /**
      * Идентификатор
@@ -29,25 +29,25 @@ public class Usr implements Serializable {
     /**
      * Имя
      */
-    @Column(name = "user_name", length = 100)
+    @Column(name = "user_name", length = 100,nullable = false)
     private String userName;
 
     /**
      * Электронная почта
      */
-    @Column(name = "email", length = 100)
+    @Column(name = "email", length = 100,nullable = false)
     private String email;
 
     /**
      * Пароль
      */
-    @Column(name = "password", length = 100)
+    @Column(name = "password", length = 100,nullable = false)
     private String password;
 
     /**
      * Код активации
      */
-    @Column(name = "activ_code", length = 100)
+    @Column(name = "activ_code", length = 100,nullable = false)
     private String activationCode;
 
     /**
@@ -64,7 +64,7 @@ public class Usr implements Serializable {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "usr", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<File> files;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -73,7 +73,7 @@ public class Usr implements Serializable {
             joinColumns = { @JoinColumn(name = "owner_id") },
             inverseJoinColumns = { @JoinColumn(name = "requester_id") }
     )
-    private Set<Usr> requestersToVisible = new HashSet<>();
+    private Set<User> requestersToVisible = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -81,7 +81,7 @@ public class Usr implements Serializable {
             joinColumns = { @JoinColumn(name = "owner_id") },
             inverseJoinColumns = { @JoinColumn(name = "requester_id") }
     )
-    private Set<Usr> visibleAccess = new HashSet<>();
+    private Set<User> visibleAccess = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -89,7 +89,7 @@ public class Usr implements Serializable {
             joinColumns = { @JoinColumn(name = "owner_id") },
             inverseJoinColumns = { @JoinColumn(name = "requester_id") }
     )
-    private Set<Usr> requestersToDownload = new HashSet<>();
+    private Set<User> requestersToDownload = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -97,10 +97,10 @@ public class Usr implements Serializable {
             joinColumns = { @JoinColumn(name = "owner_id") },
             inverseJoinColumns = { @JoinColumn(name = "requester_id") }
     )
-    private Set<Usr> downloadAccess = new HashSet<>();
+    private Set<User> downloadAccess = new HashSet<>();
 
 
-    public Usr() {
+    public User() {
 
     }
 
@@ -180,35 +180,35 @@ public class Usr implements Serializable {
         return getFiles().size();
     }
 
-    public Set<Usr> getRequestersToVisible() {
+    public Set<User> getRequestersToVisible() {
         return requestersToVisible;
     }
 
-    public void setRequestersToVisible(Set<Usr> requestersToVisible) {
+    public void setRequestersToVisible(Set<User> requestersToVisible) {
         this.requestersToVisible = requestersToVisible;
     }
 
-    public Set<Usr> getVisibleAccess() {
+    public Set<User> getVisibleAccess() {
         return visibleAccess;
     }
 
-    public void setVisibleAccess(Set<Usr> visibleAccess) {
+    public void setVisibleAccess(Set<User> visibleAccess) {
         this.visibleAccess = visibleAccess;
     }
 
-    public Set<Usr> getRequestersToDownload() {
+    public Set<User> getRequestersToDownload() {
         return requestersToDownload;
     }
 
-    public void setRequestersToDownload(Set<Usr> requestersToDownload) {
+    public void setRequestersToDownload(Set<User> requestersToDownload) {
         this.requestersToDownload = requestersToDownload;
     }
 
-    public Set<Usr> getDownloadAccess() {
+    public Set<User> getDownloadAccess() {
         return downloadAccess;
     }
 
-    public void setDownloadAccess(Set<Usr> downloadAccess) {
+    public void setDownloadAccess(Set<User> downloadAccess) {
         this.downloadAccess = downloadAccess;
     }
 }

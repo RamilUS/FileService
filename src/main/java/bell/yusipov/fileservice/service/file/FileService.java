@@ -1,7 +1,7 @@
 package bell.yusipov.fileservice.service.file;
 
 import bell.yusipov.fileservice.model.File;
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface FileService {
      * @param description описание файлв
      * @param fileOwner   собственник файла
      */
-    void upload(MultipartFile uploadFile, String description, Usr fileOwner);
+    void upload(MultipartFile uploadFile, String description, User fileOwner);
 
     /**
      * Получение файла по названию

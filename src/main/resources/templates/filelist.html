@@ -16,7 +16,7 @@
         <tr th:each="file: ${files}">
             <td th:text="${file.id}">id</td>
             <td th:text="${file.fileName}">name</td>
-            <td th:text="${file.usr.userName}">owner</td>
+            <td th:text="${file.user.userName}">owner</td>
             <td th:text="${file.downloadCount}">id</td>
         </tr>
     </table>

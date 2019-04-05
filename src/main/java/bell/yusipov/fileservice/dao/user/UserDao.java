@@ -1,6 +1,6 @@
 package bell.yusipov.fileservice.dao.user;
 
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 
 import java.util.List;
 
@@ -11,16 +11,16 @@ public interface UserDao {
     /**
      * Добавление нового пользователя
      *
-     * @param usr - пользователь
+     * @param user - пользователь
      */
-    void addUser(Usr usr);
+    void addUser(User user);
 
     /**
      * Получение списка всех пользователей
      *
      * @return List список пользователей
      */
-    List<Usr> findAll();
+    List<User> findAll();
 
     /**
      * Получение пользователя по имени
@@ -28,7 +28,7 @@ public interface UserDao {
      * @param usrName имя пользователя
      * @return объект пользователя
      */
-    Usr getUserByName(String usrName);
+    User getUserByName(String usrName);
 
     /**
      * Получение пользователя по его индификатору
@@ -36,7 +36,7 @@ public interface UserDao {
      * @param userId индификатору
      * @return объект пользователя
      */
-    Usr getUserById(Integer userId);
+    User getUserById(Integer userId);
 
     /**
      * Получение пользователя по коду активации
@@ -44,19 +44,19 @@ public interface UserDao {
      * @param activCode - активационный код
      * @return пользователь
      */
-    Usr getUserByActivationCode(String activCode);
+    User getUserByActivationCode(String activCode);
 
     /**
      * Обновление пользователя
      *
-     * @param usr пользователь
+     * @param user пользователь
      */
-    void updateUser(Usr usr);
+    void updateUser(User user);
 
     /**
      * Получение ниндификатора пользователя
-     * @param usr пользователь
+     * @param user пользователь
      * @return индификатор
      */
-    Integer getUserId(Usr usr);
+    Integer getUserId(User user);
 }

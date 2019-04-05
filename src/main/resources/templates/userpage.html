@@ -55,8 +55,8 @@
         <tr>
             <th>Запросы на просмотр файлов от пользователей :</th>
         </tr>
-        <tr th:each="usr: ${requestUsers}">
-          <td th:text="${usr.userName}">userName</td>
+        <tr th:each="user: ${requestUsers}">
+          <td th:text="${user.userName}">userName</td>
             <td><a th:href="@{/confirmvisible/} + ${pageOwnerId}">Дать доступ</a></td>
             <td><a th:href="@{/denyvisible/} + ${pageOwnerId}">Отказать</a></td>
         </tr>
@@ -65,8 +65,8 @@
         <tr>
             <th>Запросы на скачивание файлов от пользователей :</th>
         </tr>
-        <tr th:each="usr: ${requestUsers}">
-             <td th:text="${usr.userName}">userName</td>
+        <tr th:each="user: ${requestUsers}">
+             <td th:text="${user.userName}">userName</td>
             <td><a th:href="@{/confirmvisible/} + ${pageOwnerId}">Дать доступ</a></td>
             <td><a th:href="@{/denydownload/} + ${pageOwnerId}">Отказать</a></td>
         </tr>

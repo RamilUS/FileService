@@ -1,6 +1,6 @@
 package bell.yusipov.fileservice.service.user;
 
-import bell.yusipov.fileservice.model.Usr;
+import bell.yusipov.fileservice.model.User;
 
 import java.util.List;
 
@@ -12,16 +12,16 @@ public interface UserService {
     /**
      * Добавление пользователя в БД
      *
-     * @param usr
+     * @param user
      */
-    void addUser(Usr usr);
+    void addUser(User user);
 
     /**
      * Получения списка пользователей в БД
      *
      * @return список пользователей
      */
-    List<Usr> userList();
+    List<User> userList();
 
     /**
      * Подтверждение почты пользователя
@@ -36,12 +36,12 @@ public interface UserService {
      * @param owner имя собственника
      * @return собственник страницы
      */
-    Usr getOwnerByName(String owner);
+    User getOwnerByName(String owner);
 
     /**
      * Получение индификатора собственника страницы
-     * @param usr объект собственника
+     * @param user объект собственника
      * @return индификатор
      */
-    Integer getOwnerId(Usr usr);
+    Integer getOwnerId(User user);
 }

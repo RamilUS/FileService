@@ -1,6 +1,6 @@
 package bell.yusipov.fileservice.controller;
 
-import bell.yusipov.fileservice.config.UsrPrincipal;
+import bell.yusipov.fileservice.config.UserPrincipal;
 import bell.yusipov.fileservice.model.File;
 import bell.yusipov.fileservice.service.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
  * Контроллер для работы с файлами
  */
 @Controller
-public class FileControllerImpl {
+public class FileController {
 
     private final FileService fileService;
 
     @Autowired
-    public FileControllerImpl(FileService fileService) {
+    public FileController(FileService fileService) {
 
         this.fileService = fileService;
 
@@ -45,7 +45,7 @@ public class FileControllerImpl {
     @PostMapping("/upload")
     public String uploadFile(Model model, @RequestParam("file") MultipartFile uploadFile,
                              @RequestParam("description") String description,
-                             @AuthenticationPrincipal UsrPrincipal user) {
+                             @AuthenticationPrincipal UserPrincipal user) {
 
         if (description == null || description.isEmpty()) {
             model.addAttribute("report", "Нет описания файла");
@@ -56,7 +56,7 @@ public class FileControllerImpl {
             model.addAttribute("report", "Файл не выбран");
         }
 
-        fileService.upload(uploadFile, description, user.getUsr());
+        fileService.upload(uploadFile, description, user.getUser());
         model.addAttribute("report", "Файл загружен");
         model.addAttribute("files", fileService.getFileList());
 
